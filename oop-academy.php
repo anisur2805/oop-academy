@@ -12,6 +12,7 @@
  */
 
 use OOP\Academy\Assets;
+use OOP\Academy\Installer;
 
 defined( 'ABSPATH' ) or die( 'No Cheating!' );
 
@@ -72,12 +73,8 @@ final class OOP_Academy {
      * @return void
      */
     public function activate() {
-        $installed = get_option( 'oop_academy_installed' );
-        if( !$installed ) {
-            update_option('oop_academy_installed', time() );
-        }
-        
-        update_option( 'oop_academy_version', OOP_ACADEMY_VERSION );
+        $installer = new Installer();
+        $installer->run();
     }
     
     public function init_plugin(  ) {

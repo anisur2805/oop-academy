@@ -15,7 +15,8 @@ class Menu {
         $parent_slug = 'oop-academy';
         
         // $hook = 
-        add_menu_page( __( 'OOP Academy', 'oop-academy' ), __( 'OOP Academy', 'oop-academy' ), $capability, $parent_slug, [$this, 'address_book_page'], 'dashicons-welcome-learn-more' );
+        $page_title = __( 'OOP Academy', 'oop-academy' );
+        add_menu_page( $page_title, $page_title, $capability, $parent_slug, [$this, 'address_book_page'], 'dashicons-welcome-learn-more' );
         add_submenu_page($parent_slug, __('Address Book', 'oop-academy'), __('Address Book', 'oop-academy'), $capability, 'oop-academy', [$this, 'address_book_page']);
         add_submenu_page($parent_slug, __('Settings', 'oop-academy'), __('Settings', 'oop-academy'), $capability, 'oop-academy-settings', [$this, 'settings_page']);
         
