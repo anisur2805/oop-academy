@@ -42,6 +42,7 @@ class Addressbook {
             wp_die('Are you cheating!');
         }
         
+        var_dump( oop_ac_insert_address() );
         
         // var_dump($_POST);
         // exit();
