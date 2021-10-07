@@ -14,6 +14,11 @@ class Assets {
                 'version' => filemtime( OOP_ACADEMY_PATH . '/assets/js/frontend.js' ),
                 'deps'    => ['jquery'],
             ],
+            'enquiry-script' => [
+                'src'     => OOP_ACADEMY_ASSETS . '/js/enquiry.js',
+                'version' => filemtime( OOP_ACADEMY_PATH . '/assets/js/enquiry.js' ),
+                'deps'    => ['jquery'],
+            ],
         ];
     }
 
@@ -23,9 +28,13 @@ class Assets {
                 'src'     => OOP_ACADEMY_ASSETS . '/css/frontend.css',
                 'version' => filemtime( OOP_ACADEMY_PATH . '/assets/css/frontend.css' ),
             ],
-            'admin-style' => [
+            'admin-style'   => [
                 'src'     => OOP_ACADEMY_ASSETS . '/css/admin.css',
                 'version' => filemtime( OOP_ACADEMY_PATH . '/assets/css/admin.css' ),
+            ],
+            'enquiry-style' => [
+                'src'     => OOP_ACADEMY_ASSETS . '/css/enquiry.css',
+                'version' => filemtime( OOP_ACADEMY_PATH . '/assets/css/enquiry.css' ),
             ],
         ];
     }
@@ -45,6 +54,11 @@ class Assets {
             wp_register_style( $handle, $style['src'], $deps, $style['version'] );
 
         }
+
+        wp_localize_script( 'enquiry-script', 'oopAcademy', [
+            'ajaxUrl' => admin_url( 'admin-ajax.php' ),
+            'error'   => __( 'Something went wrong', 'oop-academy' ),
+        ] );
 
     }
 

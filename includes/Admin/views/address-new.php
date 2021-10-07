@@ -3,13 +3,14 @@
     <?php
     
     var_dump( $this->errors ) ;
-function inputLabel( $for, $name ) {
-    echo '<label for="' . $for . '">' . __( $name, 'oop-academy' ) . '</label>';
-}
+    
+    function inputLabel( $for, $name ) {
+        echo '<label for="' . $for . '">' . __( $name, 'oop-academy' ) . '</label>';
+    }
 
-function input_field( $id, $value, $name, $type = "text", $class = "regular-text" ) {
-    echo '<input id="' . $id . '" name="' . $name . '" value="" type="' . $type . '" class="' . $class . '" />';
-}
+    function input_field( $id, $value, $name, $type = "text", $class = "regular-text" ) {
+        echo '<input id="' . $id . '" name="' . $name . '" value="" type="' . $type . '" class="' . $class . '" />';
+    }
 
 ?>
     <form action="" method="post">
@@ -50,7 +51,7 @@ function input_field( $id, $value, $name, $type = "text", $class = "regular-text
 
 
         <?php
-wp_nonce_field( 'new-address' );
-submit_button( __( 'Add Address', 'oop-academy' ), 'primary', 'submit_address' );?>
+        wp_nonce_field( 'new-address' );
+        submit_button( __( 'Add Address', 'oop-academy' ), 'primary', 'submit_address' );?>
     </form>
 </div>

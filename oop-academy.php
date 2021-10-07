@@ -11,6 +11,7 @@
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  */
 
+use OOP\Academy\Ajax;
 use OOP\Academy\Assets;
 use OOP\Academy\Installer;
 
@@ -80,6 +81,10 @@ final class OOP_Academy {
     public function init_plugin(  ) {
         
         new OOP\Academy\Assets();
+        
+        if( defined( 'DOING_AJAX') && DOING_AJAX ) {
+            new Ajax();
+        }
         
         if( is_admin()) {
             new \OOP\Academy\Admin();
