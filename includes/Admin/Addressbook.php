@@ -2,6 +2,7 @@
 namespace OOP\Academy\Admin;
 
 class Addressbook {
+    public $errors = [];
     public function plugin_page() {
         $action = isset( $_GET['action'] ) ? $_GET['action'] : 'list';
 
@@ -20,33 +21,56 @@ class Addressbook {
             break;
 
         default:
-            $template =  __DIR__ . '/views/address-list.php';
+            $template = __DIR__ . '/views/address-list.php';
             break;
         }
-        
-        if( file_exists( $template )) {
+
+        if ( file_exists( $template ) ) {
             include $template;
         }
     }
-    
+
     public function form_handler() {
-        if( !isset( $_POST['submit_address'])) {
+        if ( !isset( $_POST['submit_address'] ) ) {
             return;
         }
-        
-        if( !wp_verify_nonce($_POST['_wpnonce'], 'new-address')) {
-            wp_die('Are you cheating!');
+
+        if ( !wp_verify_nonce( $_POST['_wpnonce'], 'new-address' ) ) {
+            wp_die( 'Are you cheating!' );
         }
-        
-        if( !current_user_can('manage_options')) {
-            wp_die('Are you cheating!');
+
+        if ( !current_user_can( 'manage_options' ) ) {
+            wp_die( 'Are you cheating!' );
         }
+
+        $name    = isset( $_POST['name'] ) ? sanitize_text_field( $_POST['name'] ) : "";
+        $address = isset( $_POST['address'] ) ? sanitize_textarea_field( $_POST['address'] ) : "";
+        $phone   = isset( $_POST['phone'] ) ? sanitize_text_field( $_POST['phone'] ) : "";
+
+        if ( empty( $name ) ) {
+            $this->errors['name'] = __( "Please provide a name.", "oop-academy" );
+        }
+
+        if ( empty( $phone ) ) {
+            $this->errors['phone'] = __( "Please provide a phone number.", "oop-academy" );
+        }
+
+        if ( !empty( $this->errors ) ) {
+            return;
+        }
+        $insert_id = oop_ac_insert_address( [
+            "name"    => $name,
+            "address" => $address,
+            "phone"   => $phone,
+        ] );
         
-        var_dump( oop_ac_insert_address() );
-        
-        // var_dump($_POST);
-        // exit();
+        if( is_wp_error( $insert_id ) ) {
+            wp_die( $insert_id->get_error_message() );
+        }
+
+        $redirect_to = admin_url("admin.php?page=oop-academy&inserted=true");
+        wp_redirect( $redirect_to );
+        exit();
     }
-    
 
 }

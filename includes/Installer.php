@@ -29,7 +29,7 @@ class Installer {
             name varchar(100) NOT NULL DEFAULT '',
             phone varchar(30) DEFAULT NULL,
             address varchar(255) DEFAULT NULL,
-            create_at DATETIME NOT NULL,
+            created_at DATETIME NOT NULL,
             created_by BIGINT(20) UNSIGNED NOT NULL,
             PRIMARY KEY (`id`)
         ) $charset_collate";

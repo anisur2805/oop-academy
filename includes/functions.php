@@ -33,7 +33,7 @@ function oop_ac_insert_address( $args = [] ) {
             '%s',
             '%s',
             '%d',
-            '%d'
+            '%s'
         ]
     );
     

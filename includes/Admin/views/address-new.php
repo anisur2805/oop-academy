@@ -1,12 +1,14 @@
 <div class="wrap">
     <h1 class="wp-heading-inline"><?php _e( 'Add Address', 'oop-academy' );?></h1>
     <?php
+    
+    var_dump( $this->errors ) ;
 function inputLabel( $for, $name ) {
     echo '<label for="' . $for . '">' . __( $name, 'oop-academy' ) . '</label>';
 }
 
 function input_field( $id, $value, $name, $type = "text", $class = "regular-text" ) {
-    echo '<input id="' . $id . '" name="' . $name . '" value="' . $value . '" type="' . $type . '" class="' . $class . '" />';
+    echo '<input id="' . $id . '" name="' . $name . '" value="" type="' . $type . '" class="' . $class . '" />';
 }
 
 ?>
