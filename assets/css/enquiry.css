@@ -1,0 +1,18 @@
+.form-group-row {
+	margin-bottom: 15px;
+    display: inline-flex;
+    width: 600px;
+}
+.form-group-row label {
+	width: 100px;
+	display: inline-block;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+.form-group-row input,
+.form-group-row textarea {
+    width: 100%;
+}
+.form-group-row input[type="submit"] {
+	margin-left: 100px;
+}
