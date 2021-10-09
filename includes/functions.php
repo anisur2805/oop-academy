@@ -64,11 +64,11 @@ function opp_ac_get_addresses( $args = [] ) {
     $args = wp_parse_args( $args, $defaults );
 
     $items = $wpdb->get_results(
-        $wpdb->get_prepare(
+        $wpdb->prepare(
             "SELECT * FROM {$wpdb->prefix}ac_addresses
-            ORDER BY %s %s
-            LIMIT %d %d",
-            $args["orderby"], $args["order"], $args["offset"], $args["number"]
+            ORDER BY {$args["orderby"]} {$args["order"]}
+            LIMIT %d OFFSET %d",
+            $args["number"], $args["offset"], 
         )
     );
 
@@ -77,12 +77,12 @@ function opp_ac_get_addresses( $args = [] ) {
 }
 
 /**
- * Get the count 
+ * Get the count
  *
  * @return int
  */
-function oop_ac_addresses_count( ) {
+function oop_ac_addresses_count() {
     global $wpdb;
-    
-    return (int) $wpdb->get_var( "SELECT * count(id) FROM {$wpdb->prefix}ac_addresses ");
+
+    return (int) $wpdb->get_var( "SELECT count(id) FROM {$wpdb->prefix}ac_addresses " );
 }
