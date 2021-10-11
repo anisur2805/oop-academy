@@ -68,7 +68,7 @@ function opp_ac_get_addresses( $args = [] ) {
             "SELECT * FROM {$wpdb->prefix}ac_addresses
             ORDER BY {$args["orderby"]} {$args["order"]}
             LIMIT %d OFFSET %d",
-            $args["number"], $args["offset"], 
+            $args["number"], $args["offset"],
         )
     );
 
@@ -85,4 +85,38 @@ function oop_ac_addresses_count() {
     global $wpdb;
 
     return (int) $wpdb->get_var( "SELECT count(id) FROM {$wpdb->prefix}ac_addresses " );
+}
+
+/**
+ * Fetch a single contact form DB
+ *
+ * @param int $id
+ *
+ * @return object
+ */
+function oop_ac_get_address( $id ) {
+    global $wpdb; // Global WPDB class object
+
+    return $wpdb->get_row( 
+        $wpdb->prepare( // use prepare for avoid sql injection
+            "SELECT  * FROM {$wpdb->prefix}ac_addresses WHERE id = %d", $id // select by id
+        )
+    );
+}
+
+/**
+ * Delete an address
+ *
+ * @param int $id
+ * 
+ * @return int|boolean
+ */
+function oop_ac_delete_address( $id ) {
+    global $wpdb;
+
+    return $wpdb->delete(
+        $wpdb->prefix . 'ac_addresses',
+        ['id' => $id],
+        ['%d'],
+    );
 }

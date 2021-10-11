@@ -1,8 +1,10 @@
 <?php
 namespace OOP\Academy\Admin;
 
+use OOP\Academy\Traits\Form_Error;
+
 class Addressbook {
-    public $errors = [];
+    use Form_Error;
     public function plugin_page() {
         $action = isset( $_GET['action'] ) ? $_GET['action'] : 'list';
 
@@ -72,5 +74,4 @@ class Addressbook {
         wp_redirect( $redirect_to );
         exit();
     }
-
 }
