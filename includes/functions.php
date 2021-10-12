@@ -24,23 +24,46 @@ function oop_ac_insert_address( $args = [] ) {
 
     $data = wp_parse_args( $args, $defaults );
 
-    $inserted = $wpdb->insert(
-        "{$wpdb->prefix}ac_addresses",
-        $data,
-        [
-            '%s',
-            '%s',
-            '%s',
-            '%d',
-            '%s',
-        ]
-    );
+    if ( isset( $data['id'] ) ) {
 
-    if ( !$inserted ) {
-        return new \WP_Error( 'failed-to-insert', __( 'Failed to insert', 'oop-academy' ) );
+        $id = $data['id'];
+        unset( $data['id'] );
+
+        $updated = $wpdb->update(
+            "{$wpdb->prefix}ac_addresses",
+            $data,
+            ['id' => $id],
+            [
+                '%s',
+                '%s',
+                '%s',
+                '%d',
+                '%s',
+            ],
+            ['%d']
+        );
+
+        return $updated;
+    } else {
+
+        $inserted = $wpdb->insert(
+            "{$wpdb->prefix}ac_addresses",
+            $data,
+            [
+                '%s',
+                '%s',
+                '%s',
+                '%d',
+                '%s',
+            ]
+        );
+
+        if ( !$inserted ) {
+            return new \WP_Error( 'failed-to-insert', __( 'Failed to insert', 'oop-academy' ) );
+        }
+
+        return $wpdb->insert_id;
     }
-
-    return $wpdb->insert_id;
 
 }
 
@@ -97,8 +120,8 @@ function oop_ac_addresses_count() {
 function oop_ac_get_address( $id ) {
     global $wpdb; // Global WPDB class object
 
-    return $wpdb->get_row( 
-        $wpdb->prepare( // use prepare for avoid sql injection
+    return $wpdb->get_row(
+        $wpdb->prepare(  // use prepare for avoid sql injection
             "SELECT  * FROM {$wpdb->prefix}ac_addresses WHERE id = %d", $id // select by id
         )
     );
@@ -108,7 +131,7 @@ function oop_ac_get_address( $id ) {
  * Delete an address
  *
  * @param int $id
- * 
+ *
  * @return int|boolean
  */
 function oop_ac_delete_address( $id ) {
