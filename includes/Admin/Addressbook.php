@@ -90,4 +90,28 @@ class Addressbook {
         wp_redirect( $redirect_to );
         exit();
     }
+
+    public function delete_address() {
+        if ( !wp_verify_nonce( $_REQUEST['_wpnonce'], 'oop-ac-delete-address' ) ) {
+            wp_die( 'Are you cheating mia!' );
+        }
+
+        if ( !current_user_can( 'manage_options' ) ) {
+            wp_die( 'Are you cheating!' );
+        }
+
+        $id = isset( $_REQUEST['id'] ) ? intval( $_REQUEST['id'] ) : 0;
+
+        if ( oop_ac_delete_address( $id ) ) {
+            $redirected_to = admin_url( "admin.php?page=oop-academy&address-deleted=true" );
+
+        } else {
+            $redirected_to = admin_url( "admin.php?page=oop-academy&address-deleted=false" );
+        }
+
+        wp_redirect( $redirected_to );
+        exit;
+
+    }
+
 }
