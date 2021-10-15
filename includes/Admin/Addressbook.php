@@ -66,9 +66,9 @@ class Addressbook {
         }
 
         $args = [
-            "name"    => $name,
+            "name" => $name,
             "address" => $address,
-            "phone"   => $phone,
+            "phone" => $phone,
         ];
 
         if ( $id ) {

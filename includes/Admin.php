@@ -12,10 +12,7 @@ class Admin {
     }
 
     public function dispatch_actions( $addressbook ) {
-
-        $action = "oop-ac-delete-address";
         add_action( 'admin_init', [$addressbook, 'form_handler'] );
-
         add_action( 'admin_post_oop-ac-delete-address', [$addressbook, 'delete_address'] );
     }
 

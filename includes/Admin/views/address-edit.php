@@ -1,20 +1,20 @@
 <div class="wrap">
     <h1 class="wp-heading-inline"><?php _e( 'Edit Address', 'oop-academy' );?></h1>
+	
     <?php
+	    if( isset( $_GET['address-updated'] ) ) {
+	        printf('<div class="notice notice-success"><p>' .__('Address has been update successfully!', 'oop-academy') . '</p></div>');
+	    }
 
-    if( isset( $_GET['address-updated'] ) ) {
-        printf('<div class="notice notice-success"><p>' .__('Address has been update successfully!', 'oop-academy') . '</p></div>');
-    }
+		function inputLabel( $for, $name ) {
+		    echo '<label for="' . $for . '">' . __( $name, 'oop-academy' ) . '</label>';
+		}
 
-function inputLabel( $for, $name ) {
-    echo '<label for="' . $for . '">' . __( $name, 'oop-academy' ) . '</label>';
-}
-
-function input_field( $id, $value, $name, $type = "text", $class = "regular-text" ) {
-    echo '<input id="' . $id . '" name="' . $name . '" value="' . $value . '" type="' . $type . '" class="' . $class . '" />';
-}
-
-?>
+		function input_field( $id, $value, $name, $type = "text", $class = "regular-text" ) {
+		    echo '<input id="' . $id . '" name="' . $name . '" value="' . $value . '" type="' . $type . '" class="' . $class . '" />';
+		}
+	?>
+	
     <form action="" method="post">
         <table class="form-table">
             <tbody>
@@ -61,8 +61,8 @@ function input_field( $id, $value, $name, $type = "text", $class = "regular-text
 
         <input type="hidden" name="id" value="<?php echo $address->id ?>" />
         <?php
-wp_nonce_field( 'new-address' );
-submit_button( __( 'Update Address', 'oop-academy' ), 'primary', 'submit_address' );
-?>
+			wp_nonce_field( 'new-address' );
+			submit_button( __( 'Update Address', 'oop-academy' ), 'primary', 'submit_address' );
+		?>
     </form>
 </div>
