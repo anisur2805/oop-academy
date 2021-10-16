@@ -78,7 +78,7 @@ final class OOP_Academy {
         $installer->run();
     }
     
-    public function init_plugin(  ) {
+    public function init_plugin() {
         
         new OOP\Academy\Assets();
         
