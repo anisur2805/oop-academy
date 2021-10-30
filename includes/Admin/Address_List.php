@@ -56,12 +56,17 @@ class Address_List extends \WP_List_Table {
 
         $actions['edit']   = sprintf( '<a href="%s" title="%s">%s</a>', admin_url( 'admin.php?page=oop-academy&action=edit&id=' . $item->id ), $item->id, __( 'Edit', 'oop-academy' ), __( 'Edit', 'oop-academy' ) );
         $actions['delete'] = sprintf( 
-			'<a href="%s" class="submitdelete" title="%s" onclick="return confirm(\'Are you sure?\');">%s</a>', 
-		wp_nonce_url( 
-			admin_url( 
-				'admin-post.php?action=oop-ac-delete-address&id=' . $item->id),
-				'oop-ac-delete-address'), $item->id,
-		__( 'Delete', 'oop-academy' ), __( 'Delete', 'oop-academy' ) );
+			'<a href="#" class="submit_delete" title="%s" data-id="%s">%s</a>',
+		__( 'Delete', 'oop-academy' ), $item->id, __( 'Delete', 'oop-academy' ) );
+		
+		
+		// $actions['delete'] = sprintf( 
+		// 	'<a href="%s" class="submitdelete" title="%s" onclick="return confirm(\'Are you sure?\');">%s</a>', 
+		// wp_nonce_url( 
+		// 	admin_url( 
+		// 		'admin-post.php?action=oop-ac-delete-address&id=' . $item->id),
+		// 		'oop-ac-delete-address'), $item->id,
+		// __( 'Delete', 'oop-academy' ), __( 'Delete', 'oop-academy' ) );
 
         return sprintf(
             '<a href="%1$s"><strong>%2$s</strong></a> %3$s',

@@ -23,9 +23,9 @@
                         <th scope="row">
                             <?php inputLabel( 'name', 'Name' );?>
                         </th>
-
                         <td>
-                            <?php input_field( "name", esc_attr( $address->name ), "name" );?>
+                            <?php  
+							input_field( 'name', esc_attr( $address->name ), "name" );?>
                             <?php if ( $this->has_error( 'name' ) ) {?>
                                 <p class="description error"> <?php echo $this->get_error( 'name' ); ?> </p>
                             <?php }?>

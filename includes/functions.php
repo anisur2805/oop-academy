@@ -8,62 +8,62 @@
  * @return int|WP_Error
  */
 function oop_ac_insert_address( $args = [] ) {
-    global $wpdb;
+ global $wpdb;
 
-    if ( empty( $args['name'] ) ) {
-        return new \WP_Error( 'no-name', __( 'You must provide a name', 'oop-academy' ) );
-    }
+ if ( empty( $args['name'] ) ) {
+  return new \WP_Error( 'no-name', __( 'You must provide a name', 'oop-academy' ) );
+ }
 
-    $defaults = [
-        "name"       => '',
-        "address"    => '',
-        "phone"      => '',
-        "created_by" => get_current_user_id(),
-        "created_at" => current_time( 'mysql' ),
-    ];
+ $defaults = [
+  "name"       => '',
+  "address"    => '',
+  "phone"      => '',
+  "created_by" => get_current_user_id(),
+  "created_at" => current_time( 'mysql' ),
+ ];
 
-    $data = wp_parse_args( $args, $defaults );
+ $data = wp_parse_args( $args, $defaults );
 
-    if ( isset( $data['id'] ) ) {
+ if ( isset( $data['id'] ) ) {
 
-        $id = $data['id'];
-        unset( $data['id'] );
+  $id = $data['id'];
+  unset( $data['id'] );
 
-        $updated = $wpdb->update(
-            "{$wpdb->prefix}ac_addresses",
-            $data,
-            ['id' => $id],
-            [
-                '%s',
-                '%s',
-                '%s',
-                '%d',
-                '%s',
-            ],
-            ['%d']
-        );
+  $updated = $wpdb->update(
+   "{$wpdb->prefix}ac_addresses",
+   $data,
+   ['id' => $id],
+   [
+    '%s',
+    '%s',
+    '%s',
+    '%d',
+    '%s',
+   ],
+   ['%d']
+  );
 
-        return $updated;
-    } else {
+  return $updated;
+ } else {
 
-        $inserted = $wpdb->insert(
-            "{$wpdb->prefix}ac_addresses",
-            $data,
-            [
-                '%s',
-                '%s',
-                '%s',
-                '%d',
-                '%s',
-            ]
-        );
+  $inserted = $wpdb->insert(
+   "{$wpdb->prefix}ac_addresses",
+   $data,
+   [
+    '%s',
+    '%s',
+    '%s',
+    '%d',
+    '%s',
+   ]
+  );
 
-        if ( !$inserted ) {
-            return new \WP_Error( 'failed-to-insert', __( 'Failed to insert', 'oop-academy' ) );
-        }
+  if ( !$inserted ) {
+   return new \WP_Error( 'failed-to-insert', __( 'Failed to insert', 'oop-academy' ) );
+  }
 
-        return $wpdb->insert_id;
-    }
+  return $wpdb->insert_id;
+ }
 
 }
 
@@ -75,27 +75,27 @@ function oop_ac_insert_address( $args = [] ) {
  * @return array
  */
 function opp_ac_get_addresses( $args = [] ) {
-    global $wpdb;
+ global $wpdb;
 
-    $defaults = [
-        "offset"  => 0,
-        "number"  => 20,
-        "orderby" => "id",
-        "order"   => "ASC",
-    ];
+ $defaults = [
+  "offset"  => 0,
+  "number"  => 20,
+  "orderby" => "id",
+  "order"   => "ASC",
+ ];
 
-    $args = wp_parse_args( $args, $defaults );
+ $args = wp_parse_args( $args, $defaults );
 
-    $items = $wpdb->get_results(
-        $wpdb->prepare(
-            "SELECT * FROM {$wpdb->prefix}ac_addresses
+ $items = $wpdb->get_results(
+  $wpdb->prepare(
+   "SELECT * FROM {$wpdb->prefix}ac_addresses
             ORDER BY {$args["orderby"]} {$args["order"]}
             LIMIT %d OFFSET %d",
-            $args["number"], $args["offset"],
-        )
-    );
+   $args["number"], $args["offset"],
+  )
+ );
 
-    return $items;
+ return $items;
 
 }
 
@@ -105,9 +105,9 @@ function opp_ac_get_addresses( $args = [] ) {
  * @return int
  */
 function oop_ac_addresses_count() {
-    global $wpdb;
+ global $wpdb;
 
-    return (int) $wpdb->get_var( "SELECT count(id) FROM {$wpdb->prefix}ac_addresses " );
+ return (int) $wpdb->get_var( "SELECT count(id) FROM {$wpdb->prefix}ac_addresses " );
 }
 
 /**
@@ -118,13 +118,21 @@ function oop_ac_addresses_count() {
  * @return object
  */
 function oop_ac_get_address( $id ) {
-    global $wpdb; // Global WPDB class object
+ global $wpdb; // Global WPDB class object
 
-    return $wpdb->get_row(
-        $wpdb->prepare(  // use prepare for avoid sql injection
-            "SELECT  * FROM {$wpdb->prefix}ac_addresses WHERE id = %d", $id // select by id
-        )
-    );
+ $address = wp_cache_get( 'book-' . $id, 'address' );
+ if ( false === $address ) {
+  $address = $wpdb->get_row(
+   $wpdb->prepare(  // use prepare for avoid sql injection
+    "SELECT  * FROM {$wpdb->prefix}ac_addresses WHERE id = %d", $id // select by id
+   )
+  );
+
+  wp_cache_set( 'book-' . $id, $address, 'address' );
+
+ }
+ return $address;
+
 }
 
 /**
@@ -135,11 +143,11 @@ function oop_ac_get_address( $id ) {
  * @return int|boolean
  */
 function oop_ac_delete_address( $id ) {
-    global $wpdb;
+ global $wpdb;
 
-    return $wpdb->delete(
-        $wpdb->prefix . 'ac_addresses',
-        ['id' => $id],
-        ['%d'],
-    );
+ return $wpdb->delete(
+  $wpdb->prefix . 'ac_addresses',
+  ['id' => $id],
+  ['%d'],
+ );
 }
