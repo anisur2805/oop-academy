@@ -91,6 +91,9 @@ final class OOP_Academy {
         } else {
             new \OOP\Academy\Frontend();
         }
+        
+        new OOP\Academy\API();
+        
     }
     
 
